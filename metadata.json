@@ -1,0 +1,6 @@
+{
+  "name": "India Dam Break Hydrodynamic Inundation Modeling System",
+  "description": "Comprehensive national platform covering 5,300+ dams in India with hydrodynamic dam-break inundation modeling, geotechnical sensor telemetry, whirlpool & muddy seepage tracking, and multi-tier emergency alert broadcasting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

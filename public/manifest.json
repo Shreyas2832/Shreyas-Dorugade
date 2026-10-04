@@ -1,0 +1,64 @@
+{
+  "id": "/",
+  "name": "India Dam Safety & Hydrodynamic Modeling",
+  "short_name": "DamSafety IN",
+  "description": "National Dam Safety Authority & Hydrodynamic Inundation Modeling platform covering 5,300+ dams in India.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0c0a09",
+  "background_color": "#0c0a09",
+  "prefer_related_applications": false,
+  "lang": "en-IN",
+  "categories": ["utilities", "government", "weather", "education"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Emergency SOS Alert",
+      "short_name": "SOS Alert",
+      "description": "Trigger emergency dam break alert and siren",
+      "url": "/?action=sos",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Drone & Satellite Recon",
+      "short_name": "Drone Recon",
+      "description": "Inspect high-resolution drone orthomosaics and satellite radar",
+      "url": "/?action=recon",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "National 5,300+ Dams",
+      "short_name": "All Dams",
+      "description": "View comprehensive inventory of all Indian large dams",
+      "url": "/?action=inventory",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

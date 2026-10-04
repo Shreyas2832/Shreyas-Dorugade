@@ -1,0 +1,69 @@
+import { useEffect, useState } from 'react';
+
+export interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+}
+
+export function usePWAInstall() {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const [isAndroid, setIsAndroid] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    // Detect standalone mode (already running as installed app on Android / iOS)
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as unknown as { standalone?: boolean }).standalone === true;
+    setIsInstalled(isStandalone);
+
+    // Detect device OS
+    const userAgent = (window.navigator.userAgent || '').toLowerCase();
+    const androidCheck = /android/.test(userAgent);
+    const iosCheck = /iphone|ipad|ipod/.test(userAgent);
+    setIsAndroid(androidCheck);
+    setIsIOS(iosCheck);
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    const handleAppInstalled = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const install = async (): Promise<'installed' | 'dismissed' | 'manual_needed'> => {
+    if (deferredPrompt) {
+      await deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstalled(true);
+        setDeferredPrompt(null);
+        return 'installed';
+      }
+      return 'dismissed';
+    }
+    return 'manual_needed';
+  };
+
+  return {
+    isInstallable: !!deferredPrompt,
+    isInstalled,
+    isAndroid,
+    isIOS,
+    install,
+    hasNativePrompt: !!deferredPrompt,
+  };
+}
